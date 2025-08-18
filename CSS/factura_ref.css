@@ -1,0 +1,120 @@
+
+/* Approximate layout inspired by the provided e-ticket */
+* { box-sizing: border-box; }
+body { font-family: Arial, Helvetica, sans-serif; margin: 0; }
+
+.mono { font-family: 'Courier New', Courier, monospace; text-align: right; }
+
+.top-row { display: grid; grid-template-columns: 1fr 380px; gap: 12px; align-items: start; }
+.issuer-block { display: grid; grid-template-columns: 110px 1fr; gap: 8px; border: 1px solid #999; padding: 8px; min-height: 110px; }
+.logo-box img { width: 100px; height: auto; }
+.issuer-name { font-weight: bold; }
+.issuer-addr, .issuer-site { font-size: 12px; color: #333; }
+
+.ticket-block { border: 1px solid #999; padding: 8px; }
+.ticket-title { text-align: center; font-weight: bold; margin: 4px 0; }
+.ruc { text-align: center; font-size: 14px; font-weight: bold; }
+.ticket-meta { width: 100%; border-collapse: collapse; font-size: 12px; margin: 6px 0; }
+.ticket-meta th, .ticket-meta td { border: 1px solid #999; padding: 4px; text-align: center; }
+.consumo { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; border: 1px solid #999; padding: 4px; margin-top: 6px; }
+.cliente-mini { border: 1px solid #999; padding: 6px; margin-top: 6px; font-size: 12px; min-height: 40px; }
+
+.dates-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0; font-size: 12px; }
+.dates-row > div { border: 1px solid #999; padding: 4px; }
+
+.items-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.items-table th, .items-table td { border: 1px solid #999; padding: 6px; }
+.items-table thead th { background: #f3f3f3; }
+
+.bottom-row { display: grid; grid-template-columns: 1fr 300px; gap: 12px; margin-top: 24px; }
+.qr-block { border: 1px solid #999; min-height: 160px; display: grid; grid-template-rows: 1fr auto; }
+.qr-placeholder { width: 120px; height: 120px; border: 1px dashed #666; display: flex; align-items: center; justify-content: center; margin: 12px; }
+.verif { font-size: 11px; padding: 6px; border-top: 1px solid #999; }
+
+.totals-block { border: 1px solid #999; padding: 6px; }
+.totals-block table { width: 100%; border-collapse: collapse; }
+.totals-block td { border: 1px solid #999; padding: 6px; font-size: 12px; }
+.totals-block .total-pagar td { font-size: 14px; }
+
+/* fullscreen tweaks */
+html,body{height:100%;margin:0;padding:0;background:#fff;}
+@media (prefers-color-scheme: dark){
+  html,body{background:#fff;}
+}
+
+.bottom-row{ margin-top:auto; }
+
+.desc-box{ margin:12px 0; border:1px solid #999; padding:8px; font-size:12px; }
+
+/* overflow & pdf fixes */
+.desc-box{ 
+  margin:12px 0; border:1px solid #999; padding:8px; font-size:12px;
+  white-space: pre-wrap;          /* respeta saltos de linea */
+  overflow-wrap: anywhere;        /* corta palabras largas */
+  word-break: break-word;         /* evita desbordes */
+}
+.items-table td, .items-table th{
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+/* Para PDF: evitar conflictos con flex y permitir paginación natural */
+.ref-doc.pdf{
+  display: block;
+  min-height: auto;
+  height: auto;
+}
+/* Evitar cortes feos dentro de algunos bloques */
+.issuer-block, .ticket-block, .dates-row, .totals-block, .qr-block {
+  page-break-inside: avoid;
+}
+/* Permitir que la descripcion se divida en multiples paginas si es muy larga */
+.desc-box{
+  page-break-inside: auto;
+}
+/* Tamaño lógico A4 a ~96dpi: 794 x 1123 px aprox */
+.ref-doc {
+  width: 794px;
+  min-height: 1123px;
+  margin: 0 auto;
+  padding: 16px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* Tipografía consistente dentro del documento */
+.ref-doc, .ref-doc * {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.25;
+}
+
+/* Sombra opcional para preview web (no afecta el PDF) */
+@media screen {
+  .ref-doc { box-shadow: 0 0 0.5rem rgba(0,0,0,.15); }
+}
+
+/* Escala proporcional en móviles sin romper el layout */
+@media (max-width: 820px) {
+  .ref-doc {
+    transform-origin: top left;
+    /* escala para que el ancho "entre" en viewport */
+    transform: scale(calc(100vw / 794));
+    /* evita scroll horizontal */
+    margin: 0;
+  }
+}
+
+/* Reglas de impresión y PDF */
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { margin: 0; padding: 0; }
+  .ref-doc { box-shadow: none; }
+}
+
+/* Evitar cortes feos y desbordes en tablas y bloques */
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+th, td { word-break: break-word; overflow-wrap: anywhere; }
+
+/* Paginación más predecible para html2pdf */
+.issuer-block, .ticket-block, .dates-row, .totals-block, .qr-block { page-break-inside: avoid; }
+.desc-box { page-break-inside: auto; }
+

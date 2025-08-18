@@ -1,0 +1,457 @@
+/* Dark theme added */
+
+:root{
+  --bg:#0b0b0f;
+  --card:#12131a;
+  --card-2:#171823;
+  --muted:#9aa0aa;
+  --text:#e5e7eb;
+  --accent:#7c5cff;
+  --accent-2:#22d3ee;
+  --ok:#22c55e;
+  --danger:#ef4444;
+  --ring: rgba(124, 92, 255, .45);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,.18), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(34,211,238,.14), transparent 60%),
+    linear-gradient(180deg, var(--bg), #0a0a0d);
+}
+
+.invoice-form{
+  max-width: 980px;
+  margin: 40px auto;
+  padding: 28px;
+  background: linear-gradient(180deg, var(--card), var(--card-2));
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 18px;
+  box-shadow: 0 20px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.styles_titulo{
+  display:flex; align-items:center; gap:14px; margin-bottom:18px;
+}
+.styles_titulo .imgLogo{ width:62px; height:62px; object-fit:contain; filter: drop-shadow(0 6px 20px rgba(124,92,255,.4)); }
+.styles_titulo h1, .styles_titulo h2{
+  margin:0;
+}
+.styles_titulo h1{ font-size: clamp(22px, 3vw, 28px); font-weight:700; letter-spacing:.2px;}
+.styles_titulo h2{ font-size: clamp(18px, 2.3vw, 22px); color: var(--muted); font-weight:500; }
+
+form label{
+  display:block;
+  font-size: 14px;
+  color: var(--muted);
+  margin: 14px 0 6px;
+}
+
+.toggle-rut-empresa {
+  margin-bottom: 20px;
+}
+
+input[type="text"], input[type="date"], input[type="number"], input[type="tel"], textarea, select{
+  width:100%;
+  background:#0f1016;
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  padding:12px 12px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .06s ease;
+}
+textarea{ resize: vertical; min-height: 90px; }
+input::placeholder, textarea::placeholder{ color:#717784; }
+
+input:focus, textarea:focus, select:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 6px var(--ring);
+}
+
+fieldset{
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:16px;
+  margin-top: 16px;
+}
+legend{ color:#cbd0db; padding:0 8px; }
+
+.servicios-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 12px;
+}
+@media (max-width: 820px){
+  .servicios-grid{ grid-template-columns: 1fr; }
+}
+
+.servicio{
+  background: #0f1016;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "check title"
+    "inputs inputs";
+  gap: 10px 12px;
+  transition: transform .08s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.servicio:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.12); }
+.servicio.active{ border-color: var(--accent); box-shadow: 0 0 0 4px rgba(124,92,255,.2); }
+
+.servicio input[type="checkbox"]{ grid-area: check; margin-top: 2px; transform: scale(1.2); accent-color: var(--accent); }
+.servicio label{ grid-area:title; margin:0; color:#d6daf0; font-weight:600; align-self:center; }
+
+.servicio .inputs{ grid-area: inputs; display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+.servicio .inputs > *{ width:100%; }
+.servicio .inputs .full{ grid-column: 1 / -1; }
+
+/* disabled inputs style */
+.servicio.disabled .inputs input,
+.servicio.disabled .inputs select,
+.servicio.disabled .inputs textarea{
+  opacity:.5;
+  pointer-events:none;
+}
+
+/* Tipo de pago + cuotas */
+.tipoPago_container{
+  display:flex; align-items:center; gap:12px; margin-top: 16px;
+}
+#cuotasContainer{
+  display:none;
+  transform: translateY(-6px);
+  transition: all .2s ease;
+}
+#cuotasContainer.show{
+  display:block;
+  transform: translateY(0);
+}
+
+/* Buttons */
+button[type="submit"], .btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px;
+  background: linear-gradient(180deg, var(--accent), #6b46ff);
+  color:white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+}
+button[type="submit"]:hover, .btn:hover{ filter: brightness(1.05); box-shadow: 0 12px 30px rgba(124,92,255,.35); }
+button[type="submit"]:active, .btn:active{ transform: translateY(1px) scale(.99); }
+
+/* Small helper row */
+.row{
+  display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px;
+}
+.row-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+@media (max-width: 820px){
+  .row, .row-3{ grid-template-columns: 1fr; }
+}
+
+/* Facturas list page minor dark touch (if used) */
+.factura-card{
+  background:#0f1016; border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:14px; margin-bottom:12px;
+}
+.factura-card h3{ margin: 0 0 6px; }
+hr{ border: none; border-top:1px solid rgba(255,255,255,.08); margin:12px 0; }
+
+
+/* --- Existing styles --- */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+}
+
+.total {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+
+input[type=checkbox] {
+        transform: scale(1.6);
+        -ms-transform: scale(1.6);
+        -webkit-transform: scale(1.6);
+        padding: 10px;
+
+}
+
+
+.invoice-form {
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 2rem;
+    padding: 20px;
+    padding-right: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.styles_titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    a {
+        text-decoration: none;
+        padding: 6px;
+        font-size: 18px;
+        color: white;
+        background-color: var(--accent);
+        border-radius: 5px;
+    }
+}
+
+.imgLogo{
+    max-width: 100%;
+    height: auto;
+    margin-left: 1rem;
+    width: 20%;
+}
+
+legend {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label, form input, form fieldset, form button, form textarea {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+form input[type="text"], form input[type="tel"], form input[type="date"], form input[type="number"], form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form fieldset {
+    border: none;
+    padding: 0;
+}
+
+form .servicio {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-weight: bold;
+}
+
+form .servicio input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+form .servicio input[type="text"], form .servicio input[type="number"] {
+    flex: 1;
+    margin-right: 10px;
+    min-width: 100px;
+}
+
+form .servicio label {
+    flex: 1;
+    min-width: 100px;
+}
+
+form button {
+    padding: 10px;
+    font-size: 18px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos Facturas */
+
+.facturas_inicio {
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    gap: 1rem;
+    button{
+        text-decoration: none;
+        padding: 4px;
+        font-size: 18px;
+        color: white;
+        background-color: #007BFF;
+        border-radius: 5px;
+    }
+}
+
+
+.h2_buscar {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 10px;
+    margin-bottom: 4px;
+    color: #007BFF;
+    border-top: 1px solid #ccc;
+}
+
+.styles_titulo {
+    margin-bottom: 6px;
+}
+
+.barra_buscar {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 4px;
+    padding: 6px;
+    font-size: 16px;
+    margin-bottom: 2rem;
+}
+.tipoPago_container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-align: center;
+    select {
+        font-size: 18px;
+        padding: 6px;
+        background-color: var(--accent);
+    }
+}
+
+/* === Mobile/Tablet Responsiveness Enhancements === */
+:root{
+  --tap: 48px; /* Minimum touch target height */
+}
+
+/* Base typography scaled for readability */
+body{ font-size: 16px; line-height: 1.35; }
+@media (max-width: 420px){
+  body{ font-size: 15px; }
+}
+
+/* Form container breathing on small screens */
+.invoice-form{ margin: 16px auto; padding: 16px; border-radius: 16px; }
+@media (min-width: 768px){
+  .invoice-form{ margin: 28px auto; padding: 22px; }
+}
+
+/* Inputs: larger tap targets */
+input[type="text"], input[type="date"], input[type="number"], textarea, select{
+  min-height: var(--tap);
+  font-size: 16px; /* avoid iOS zoom */
+}
+
+/* Checkbox larger */
+.servicio input[type="checkbox"]{ transform: scale(1.25); }
+
+/* Services grid: 1 col on phones, 2 on tablets+ */
+.servicios-grid{ grid-template-columns: 1fr; }
+@media (min-width: 600px){
+  .servicios-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+/* Inputs inside each service: stack on phones, two cols tablet+ */
+.servicio .inputs{ grid-template-columns: 1fr; gap: 8px; }
+@media (min-width: 740px){
+  .servicio .inputs{ grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
+/* Top rows (fechas/cliente) that might be styled as .row/.row-3 */
+.row{ grid-template-columns: 1fr; gap: 10px; }
+.row-3{ grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 780px){
+  .row{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .row-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+/* Sticky submit actions on mobile */
+.actions-sticky{
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(10,10,13,.4), rgba(10,10,13,.9));
+  backdrop-filter: blur(8px);
+  padding: 12px 8px 8px;
+  margin: 8px -8px -8px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.actions-sticky .btn, .actions-sticky button[type="submit"]{ width: 100%; min-height: var(--tap); font-size: 16px; }
+
+/* Fine-tune titles on small screens */
+.styles_titulo{ gap: 10px; }
+.styles_titulo h1{ font-size: clamp(18px, 6vw, 24px); }
+.styles_titulo h2{ font-size: clamp(14px, 4.5vw, 18px); }
+
+/* === Live Summary Card === */
+.summary-box{
+  margin-top: 14px;
+  background: #0f1016;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 12px;
+}
+.summary-grid{
+  display:grid; gap: 8px;
+}
+.row-summary{
+  display:flex; align-items:center; justify-content:space-between;
+  font-size: 16px;
+}
+.row-summary.total{
+  border-top:1px dashed rgba(255,255,255,.12);
+  padding-top:8px;
+  font-size: 18px;
+}
+.row-summary.cuotas{
+  font-size: 15px; color: #cbd0db;
+}
+
+/* === Ajuste de estilo solo para checkboxes === */
+
+/* Cancelar el estilo global que se aplicaba a todos los inputs */
+input[type="checkbox"]:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Estilo de foco limpio solo en la cajita */
+input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--accent);   /* color violeta de tu tema */
+  outline-offset: 2px;                /* pegado al borde del cuadradito */
+  border-radius: 4px;                 /* opcional: esquinas suaves */
+}

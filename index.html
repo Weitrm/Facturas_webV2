@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Generador de Facturas</title>
+<script defer="" src="./JS/main.js"></script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link href="./CSS/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="invoice-form">
+<div class="styles_titulo">
+<img alt="logo" class="imgLogo" src="./img/jslogo.png"/>
+<h1>Facturas</h1>
+<a href="./facturas.html">Ver Facturas</a>
+</div>
+<form id="invoiceForm" method="post">
+<label for="numeroFactura">Número de Factura:</label>
+<input id="numeroFactura" name="numeroFactura" required="" type="text"/>
+<label for="nombreCliente">Nombre del Cliente:</label>
+<input id="nombreCliente" name="nombreCliente" required="" type="text"/>
+<label for="numeroTelefono">Teléfono:</label>
+<input id="numeroTelefono" name="numeroTelefono" required="" type="tel"/>
+<label for="fechaFactura">Fecha de Factura:</label>
+<input id="fechaFactura" name="fechaFactura" required="" type="date"/>
+<label for="incluyeRut">Incluir RUT:</label>
+<input id="incluyeRut" name="incluyeRut" type="checkbox"/>
+<label for="rut">RUT:</label>
+<input id="rut" name="rut" placeholder="Ingresar numero de RUT" type="text" value=""/>
+<fieldset>
+<legend>Servicios Realizados</legend>
+<div class="toggle-rut-empresa"><label for="toggleRutEmpresa">Incluir RUT y Empresa del cliente</label><input id="toggleRutEmpresa" type="checkbox"/></div><div class="reparacion-extra" style="display:none;"><label for="rutCliente">RUT del cliente:</label><input id="rutCliente" name="rutCliente" placeholder="RUT del cliente" type="text"/><label for="empresaCliente">Empresa del cliente:</label><input id="empresaCliente" name="empresaCliente" placeholder="Nombre de la empresa" type="text"/></div>
+<div class="servicios-grid"><div class="servicio">
+<input id="equipo" name="servicios" type="checkbox" value="Equipo"/>
+<label for="equipo">Equipo</label>
+<div class="inputs"><select name="equipoDetail"><option value="9000btu">9000BTU</option><option value="12000btu">12000BTU</option><option value="18000btu">18000BTU</option><option value="24000btu">24000BTU</option><option value="otros">Otros</option></select><input data-label="Marca" name="equipoMarca" placeholder="Marca del equipo" type="text"/><input name="equipoPrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio">
+<input id="instalacionEquipo" name="servicios" type="checkbox" value="Instalacion de equipo"/>
+<label for="instalacionEquipo">Instalación de equipo</label>
+<div class="inputs"><select name="instalacionDetail"><option value="9000btu">9000BTU</option><option value="12000btu">12000BTU</option><option value="18000btu">18000BTU</option><option value="24000btu">24000BTU</option><option value="otros">Otros</option></select><input data-label="Marca" name="instalacionMarca" placeholder="Marca del equipo" type="text"/><input name="instalacionPrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio">
+<input id="instalacionElectrica" name="servicios" type="checkbox" value="Instalacion electrica"/>
+<label for="instalacionElectrica">Instalación eléctrica</label>
+<div class="inputs"><input name="electricaPrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio">
+<input id="mensulas" name="servicios" type="checkbox" value="Mensulas"/>
+<label for="mensulas">Mensulas</label>
+<div class="inputs"><input name="mensulasPrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio">
+<input id="preinstalacion" name="servicios" type="checkbox" value="Preinstalacion"/>
+<label for="preinstalacion">Preinstalación</label>
+<div class="inputs"><input name="preinstalacionPrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio">
+<input id="cargaRefrigerante" name="servicios" type="checkbox" value="Carga de refrigerante"/>
+<label for="cargaRefrigerante">Carga de refrigerante</label>
+<div class="inputs"><input name="refrigerantePrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio">
+<input id="mantenimiento" name="servicios" type="checkbox" value="Mantenimiento"/>
+<label for="mantenimiento">Mantenimiento</label>
+<div class="inputs"><input name="mantenimientoPrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio">
+<input id="reparacion" name="servicios" type="checkbox" value="Reparacion"/>
+<label for="reparacion">Reparación</label>
+<div class="inputs"><input name="reparacionPrice" placeholder="Precio" step="0.01" type="number"/></div></div><div class="servicio"><input id="presupuesto" name="servicios" type="checkbox" value="Presupuesto"/><label for="presupuesto">Presupuesto</label><div class="inputs"><input data-label="Detalle" name="presupuestoDetail" placeholder="Detalle del presupuesto" type="text"/><input name="presupuestoPrice" placeholder="Precio" step="0.01" type="number"/></div></div></div></fieldset>
+<label for="incluyeIva">Incluir IVA (22%):</label>
+<input id="incluyeIva" name="incluyeIva" type="checkbox"/>
+<div class="tipoPago_container">
+<label for="tipoPago">Tipo de Pago:</label>
+<select id="tipoPago" name="tipoPago" required="">
+<option value="contado">Contado</option>
+<option value="cuota">Cuotas</option>
+</select>
+</div>
+<div id="cuotasContainer" style="display: none;">
+<label for="cuotas">Cantidad de Cuotas:</label>
+<input id="cuotas" max="12" min="1" name="cuotas" type="number" value="1"/>
+</div>
+<label for="descripcion">Descripción:</label>
+<textarea id="descripcion" name="descripcion" placeholder="Describe el trabajo realizado..." rows="4"></textarea>
+<input id="detallesServicio" name="detallesServicio" type="hidden"/>
+<div class="summary-box" id="resumenFacturaLive"><div class="summary-grid">
+<div class="row-summary"><span>Subtotal</span><strong id="live-subtotal">$ 0,00</strong></div>
+<div class="row-summary"><span>IVA (22%)</span><strong id="live-iva">$ 0,00</strong></div>
+<div class="row-summary total"><span>Total</span><strong id="live-total">$ 0,00</strong></div>
+<div class="row-summary cuotas" id="live-cuotas-row" style="display:none;">
+<span>Cuotas</span><strong id="live-cuota-monto">$ 0,00</strong>
+</div>
+</div></div><div class="actions-sticky"><button type="submit">Generar Factura</button></div>
+</form>
+</div>
+</body>
+</html>

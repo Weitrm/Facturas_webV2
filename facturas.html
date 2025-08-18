@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Facturas</title>
+    <link rel="stylesheet" href="./CSS/styles.css">
+    <script defer src="./JS/view_factura.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+    <div class="styles_titulo">
+        <img class="imgLogo" src="./img/jslogo.png" alt="logo">
+        <h1>Facturas guardadas</h1>
+        <a href="./index.html">Nueva Factura</a>
+    </div>
+    <h2 class="h2_buscar">Buscar Cliente</h2>
+    <input type="text" id="buscadorCliente" placeholder="Nombre, Telélefono o Fecha (año-mes-dia)" class="barra_buscar">
+    <div id="facturasContainer">
+
+    </div>
+</body>
+</html>
