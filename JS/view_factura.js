@@ -160,25 +160,6 @@ function mostrarFactura(factura) {
         </div>
       </div>
 
-      <script>
-      (function(){
-        function savePDF(){
-          var cont = document.getElementById('factura_container');
-          if(!cont || !window.html2pdf) return;
-          var opt = {
-            margin: 0,
-            filename: 'factura_${factura.numeroFactura}.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['css', 'legacy'] }
-          };
-          window.html2pdf().set(opt).from(cont).save();
-        }
-        if (window.html2pdf) savePDF();
-        else document.addEventListener('DOMContentLoaded', savePDF);
-      })();
-      </script>
     </body>
     </html>
   `;

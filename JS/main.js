@@ -119,7 +119,6 @@ function mostrarFactura(factura) {
       <meta charset="utf-8">
       <title>Factura ${factura.numeroFactura}</title>
       <link rel="stylesheet" href="./CSS/factura_ref.css">
-      <link rel="stylesheet" href="./CSS/styles.css">
       <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     </head>
     <body>
