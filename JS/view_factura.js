@@ -66,102 +66,93 @@ function verFactura(index) {
 
 function mostrarFactura(factura) {
   const facturaHTML = `
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <title>Factura ${factura.numeroFactura}</title>
-      <link rel="stylesheet" href="./CSS/factura_ref.css">
-      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    </head>
-    <body>
-      <div id="factura_container" class="ref-doc">
-        <div class="top-row">
-          <div class="issuer-block">
-            <div class="logo-box">
-              <img src="./img/jslogo.png" alt="Logo" />
-            </div>
+    <div id="factura_container" class="ref-doc pdf" style="
+      width:794px; min-height:auto; margin:0; padding:16px; border:none;
+      background:#fff; /* evita transparencia */
+    ">
+      <div class="top-row">
+        <div class="issuer-block">
+          <div class="logo-box">
+            <img src="./img/jslogo.png" alt="Logo" />
+          </div>
             <div class="issuer-lines">
               <div class="issuer-name">JS AIRES PANDO</div>
               <div class="issuer-addr">Pando, Canelones - 093 365 696</div>
               <div class="issuer-site">www.aireacondicionadopando.com</div>
             </div>
-          </div>
-          <div class="ticket-block">
-            <div class="ruc">RUT Emisor: <span class="mono">${factura.rut || ""}</span></div>
-            <div class="ticket-title">E-TICKET</div>
-            <table class="ticket-meta">
-              <tr><th>Serie</th><th>Número</th><th>Pago</th><th>Moneda</th></tr>
-              <tr>
-                <td>A</td>
-                <td class="mono">${factura.numeroFactura}</td>
-                <td>${(factura.tipoPago || "").toUpperCase()}</td>
-                <td>UYU</td>
-              </tr>
-            </table>
-            <div class="consumo">CONSUMO FINAL:<div class="mono">0</div></div>
+        </div>
+        <div class="ticket-block">
+          <div class="ruc">RUT Emisor: <span class="mono">${factura.rut || ""}</span></div>
+          <div class="ticket-title">E-TICKET</div>
+          <table class="ticket-meta">
+            <tr><th>Serie</th><th>Número</th><th>Pago</th><th>Moneda</th></tr>
+            <tr>
+              <td>A</td>
+              <td class="mono">${factura.numeroFactura}</td>
+              <td>${(factura.tipoPago || "").toUpperCase()}</td>
+              <td>UYU</td>
+            </tr>
+          </table>
+          <div class="consumo">CONSUMO FINAL:<div class="mono">0</div></div>
             <div class="cliente-mini">
               <div><h3>Cliente: ${factura.nombreCliente || ""}</h3></div>
               ${factura.empresaCliente ? `<div><h3>Empresa: ${factura.empresaCliente}</h3></div>` : ""}
               ${factura.rutCliente ? `<div><h3>RUT: ${factura.rutCliente}</h3></div>` : ""}
               <div><h3>Teléfono: ${factura.numeroTelefono || ""}</h3></div>
             </div>
-          </div>
-        </div>
-
-        <div class="dates-row">
-          <div><strong>FECHA:</strong> ${factura.fechaFactura}</div>
-          <div><strong>VENCIMIENTO:</strong> ${factura.fechaFactura}</div>
-          <div><strong>OC:</strong> —</div>
-        </div>
-
-        <table class="items-table">
-          <thead>
-            <tr>
-              <th>DESCRIPCIÓN</th>
-              <th style="width: 8%">UNI.</th>
-              <th style="width: 12%">Cantidad</th>
-              <th style="width: 16%">P. UNITARIO</th>
-              <th style="width: 16%">MONTO</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${factura.servicios.map(s => {
-              const desc = (s.nombre || '') + (s.detalle ? ' - ' + s.detalle : '');
-              const precio = Number(s.precio) || 0;
-              return `
-                <tr>
-                  <td>${desc}</td>
-                  <td>UNID</td>
-                  <td class="mono">1,000</td>
-                  <td class="mono">${precio.toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                  <td class="mono">${precio.toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-
-        ${factura.descripcion ? `<div class="desc-box"><strong>DESCRIPCIÓN:</strong><div>${factura.descripcion}</div></div>` : ""}
-
-        <div class="bottom-row">
-          <div class="qr-block">
-            <div class="qr-placeholder">QR</div>
-            <div class="verif">Puede verificar comprobante en: https://ejemplo</div>
-          </div>
-
-          <div class="totals-block">
-            <table>
-              <tr><td>NETO IVA T BÁSICA</td><td class="mono">${(((Number(factura.total) || 0) / (factura.incluyeIva ? 1.22 : 1))).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
-              <tr><td>IMPORTE IVA T BÁSICA (22%)</td><td class="mono">${(Number(factura.iva) || 0).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
-              <tr><td>MONTO TOTAL</td><td class="mono">${(Number(factura.total) || 0).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
-              <tr class="total-pagar"><td><strong>TOTAL A PAGAR</strong></td><td class="mono"><strong>$ ${(Number(factura.total) || 0).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></td></tr>
-            </table>
-          </div>
         </div>
       </div>
 
-    </body>
-    </html>
+      <div class="dates-row">
+        <div><strong>FECHA:</strong> ${factura.fechaFactura || ""}</div>
+        <div><strong>VENCIMIENTO:</strong> ${factura.fechaFactura || ""}</div>
+        <div><strong>OC:</strong> —</div>
+      </div>
+
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>DESCRIPCIÓN</th>
+            <th style="width: 8%">UNI.</th>
+            <th style="width: 12%">Cantidad</th>
+            <th style="width: 16%">P. UNITARIO</th>
+            <th style="width: 16%">MONTO</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${factura.servicios.map(s => {
+            const desc = (s.nombre || '') + (s.detalle ? ' - ' + s.detalle : '');
+            const precio = Number(s.precio) || 0;
+            return `
+              <tr>
+                <td>${desc}</td>
+                <td>UNID</td>
+                <td class="mono">1,000</td>
+                <td class="mono">${precio.toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                <td class="mono">${precio.toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+
+      ${factura.descripcion ? `<div class="desc-box"><strong>DESCRIPCIÓN:</strong><div>${factura.descripcion}</div></div>` : ""}
+
+      <div class="bottom-row">
+        <div class="qr-block">
+          <div class="qr-placeholder">QR</div>
+          <div class="verif">Puede verificar comprobante en: https://ejemplo</div>
+        </div>
+        <div class="totals-block">
+          <table>
+            <tr><td>NETO IVA T BÁSICA</td><td class="mono">${(((Number(factura.total) || 0) / (factura.incluyeIva ? 1.22 : 1))).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
+            <tr><td>IMPORTE IVA T BÁSICA (22%)</td><td class="mono">${(Number(factura.iva) || 0).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
+            <tr><td>MONTO TOTAL</td><td class="mono">${(Number(factura.total) || 0).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td></tr>
+            <tr class="total-pagar"><td><strong>TOTAL A PAGAR</strong></td><td class="mono"><strong>$ ${(Number(factura.total) || 0).toLocaleString('es-UY', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
   `;
 
   const ventana = window.open("", "_blank");
