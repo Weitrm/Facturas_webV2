@@ -108,7 +108,7 @@ function guardarFactura(factura) {
     localStorage.setItem("facturas", JSON.stringify(facturasGuardadas))
 }
 
-// Muestra la factura creada en uan nueva ventana
+// Muestra la factura creada en una nueva ventana
 
 
 
@@ -158,7 +158,7 @@ function mostrarFactura(factura) {
 
         <div class="dates-row">
           <div><strong>FECHA:</strong> ${factura.fechaFactura}</div>
-          <div><strong>VENCIMIENTO:</strong> ${factura.fechaFactura}</div>
+          <div><strong>VENCIMIENTO:</strong> ${factura.fechaFactura || ""}</div>
           <div><strong>OC:</strong> —</div>
         </div>
 

@@ -265,7 +265,6 @@ function descargarFacturaPDF(index) {
       <div class="dates-row">
         <div><strong>FECHA:</strong> ${factura.fechaFactura || ""}</div>
         <div><strong>VENCIMIENTO:</strong> ${factura.fechaFactura || ""}</div>
-        <div><strong>OC:</strong> —</div>
       </div>
 
       <table class="items-table">

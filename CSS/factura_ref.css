@@ -17,7 +17,12 @@ body { font-family: Arial, Helvetica, sans-serif; margin: 0; }
 .ticket-meta { width: 100%; border-collapse: collapse; font-size: 12px; margin: 6px 0; }
 .ticket-meta th, .ticket-meta td { border: 1px solid #999; padding: 4px; text-align: center; }
 .consumo { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; border: 1px solid #999; padding: 4px; margin-top: 6px; }
-.cliente-mini { border: 1px solid #999; padding: 6px; margin-top: 6px; font-size: 12px; min-height: 40px; }
+.cliente-mini { border: 1px solid #999; padding: 6px; margin-top: 6px; font-size: 12px; min-height: 40px; h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-weight: normal;
+} }
 
 .dates-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0; font-size: 12px; }
 .dates-row > div { border: 1px solid #999; padding: 4px; }
@@ -73,7 +78,7 @@ html,body{height:100%;margin:0;padding:0;background:#fff;}
 }
 /* Tamaño lógico A4 a ~96dpi: 794 x 1123 px aprox */
 .ref-doc {
-  width: 794px;
+  width: 100%;
   min-height: 1123px;
   margin: 0 auto;
   padding: 16px;
